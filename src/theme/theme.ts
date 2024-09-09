@@ -24,19 +24,30 @@ const palette = {
 export const theme = createTheme({
   colors: {
     ...palette,
-    primary: palette.greenPrimaryLight,
+    primary: palette.greenPrimary,
     primaryContrast: palette.grayWhite,
-
+  
     buttonPrimary: palette.greenPrimary,
-
+  
     background: palette.grayWhite,
     backgroundContrast: palette.grayBlack,
-
-    erro: palette.redError,
+  
+    error: palette.redError,
     errorLight: palette.redErrorLight,
-
+  
     success: palette.greenSuccess,
     successLight: palette.greenSuccessLight,
+  
+    market: palette.carrotSecondary,
+    paragraph: palette.gray1,
+  
+    paragraphSecondary: palette.gray1,
+  
+    iconColor: palette.greenPrimary,
+    iconFillColor: palette.grayWhite,
+  
+    onBackgroundGray1: palette.gray1,
+    onBackgroundGray2: palette.gray4,
   },
   spacing: {
     s4: 4,
@@ -63,3 +74,4 @@ export const theme = createTheme({
 });
 
 export type Theme = typeof theme;
+export type ThemeColors = keyof Theme['colors'];
