@@ -1,19 +1,32 @@
+import { createText } from '@shopify/restyle';
 import React from 'react';
-import { Text as RNText, TextProps as RNTextProps, TextStyle } from 'react-native';
+import { TextStyle } from 'react-native';
+import { Theme } from '../../theme/theme';
 
-interface TextProps extends RNTextProps {
+const SRText = createText<Theme>();
+type SRTextProps = React.ComponentProps<typeof SRText>;
+
+interface TextProps extends SRTextProps {
   preset?: TextVariants;
   bold?: boolean;
   italic?: boolean;
   semiBold?: boolean;
 }
 
-export function Text({ children, bold, italic, semiBold, preset = 'paragraphMedium', style, ...rest }: TextProps) {
+export function Text({
+  children,
+  bold,
+  italic,
+  semiBold,
+  preset = 'paragraphMedium',
+  style,
+  ...sRTextProps
+}: TextProps) {
   const fontFamily = getFontFamily(preset, bold, italic, semiBold);
   return (
-    <RNText style={[$fontSizes[preset], {fontFamily}, style]} {...rest}>
+    <SRText color="backgroundContrast" style={[$fontSizes[preset], {fontFamily}, style]} {...sRTextProps}>
       {children}
-    </RNText>
+    </SRText>
   );
 }
 
@@ -40,7 +53,12 @@ const $fontSizes: Record<TextVariants, TextStyle> = {
   paragraphCaptionSmall: {fontSize: 10, lineHeight: 14},
 };
 
-function getFontFamily(preset: TextVariants, bold?: boolean, italic?: boolean, semiBold?: boolean) {
+function getFontFamily(
+  preset: TextVariants,
+  bold?: boolean,
+  italic?: boolean,
+  semiBold?: boolean,
+) {
   if (
     preset === 'headingLarge' ||
     preset === 'headingMedium' ||
