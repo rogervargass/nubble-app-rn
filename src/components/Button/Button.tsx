@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from '../ActivityIndicator/ActivityIndicator';
 import { TouchableOpacityBox, TouchableOpacityBoxProps } from '../Box/Box';
 import { Text } from '../Text/Text';
 import { ButtonPreset, buttonPresets } from './buttonPresets';
@@ -28,7 +28,7 @@ export function Button({
       {...buttonPreset.container}
       {...touchableOpacityBoxProps}>
       {loading ? (
-        <ActivityIndicator color='#FFF' />
+        <ActivityIndicator color={buttonPreset.content} />
       ) : (
         <Text preset="paragraphMedium" bold color={buttonPreset.content}>
           {title}
