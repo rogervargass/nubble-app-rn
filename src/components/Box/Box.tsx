@@ -18,6 +18,9 @@ import {
 } from 'react-native';
 import { Theme } from '../../theme/theme';
 
+export const Box = createBox<Theme>();
+export type BoxProps = React.ComponentProps<typeof Box>;
+
 type RestyleTypes = BackgroundColorProps<Theme> &
   SpacingProps<Theme> &
   LayoutProps<Theme> &
@@ -25,8 +28,6 @@ type RestyleTypes = BackgroundColorProps<Theme> &
   SpacingShorthandProps<Theme>;
 
 export type TouchableOpacityBoxProps = RNTouchableOpacityProps & RestyleTypes;
-
-export const Box = createBox<Theme>();
 
 export const TouchableOpacityBox = createRestyleComponent<
   TouchableOpacityBoxProps,
