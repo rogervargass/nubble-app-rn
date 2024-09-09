@@ -6,7 +6,9 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaView>
-      <Text>Ola</Text>
+      <Text preset="headingLarge">Teste</Text>
+      <Text preset="headingSmall" italic>teste</Text>
+      <Text bold>teste</Text>
     </SafeAreaView>
   );
 }
