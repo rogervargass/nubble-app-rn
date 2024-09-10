@@ -1,3 +1,4 @@
+import {Pressable} from 'react-native';
 import {ArrowLeftIcon} from '../../assets/icons/ArrowLeftIcon';
 import {ArrowRightIcon} from '../../assets/icons/ArrowRightIcon';
 import {BellIcon} from '../../assets/icons/BellIcon';
@@ -37,11 +38,25 @@ interface IconProps {
   name: keyof typeof iconRegistry;
   color?: ThemeColors;
   size?: number;
+  onPress?: () => void;
 }
 
-export function Icon({name, color = 'backgroundContrast', size}: IconProps) {
+export function Icon({
+  name,
+  color = 'backgroundContrast',
+  size,
+  onPress,
+}: IconProps) {
   const {colors} = useAppTheme();
   const SVGIcon = iconRegistry[name];
+
+  if (onPress) {
+    return (
+      <Pressable hitSlop={10} onPress={onPress}>
+        <SVGIcon color={colors[color]} size={size} />
+      </Pressable>
+    );
+  }
 
   return <SVGIcon color={colors[color]} size={size} />;
 }
