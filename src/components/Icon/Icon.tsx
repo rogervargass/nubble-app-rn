@@ -9,8 +9,10 @@ import {CameraIcon} from '../../assets/icons/CameraIcon';
 import {ChatIcon} from '../../assets/icons/ChatIcon';
 import {ChatOnIcon} from '../../assets/icons/ChatOnIcon';
 import {CheckIcon} from '../../assets/icons/CheckIcon';
+import {CheckRoundIcon} from '../../assets/icons/CheckRoundIcon';
 import {ChevronRightIcon} from '../../assets/icons/ChevronRightIcon';
 import {CommentIcon} from '../../assets/icons/CommentIcon';
+import {ErrorRoundIcon} from '../../assets/icons/ErrorRoundIcon';
 import {EyeOffIcon} from '../../assets/icons/EyeOffIcon';
 import {EyeOnIcon} from '../../assets/icons/EyeOnIcon';
 import {FlashOffIcon} from '../../assets/icons/FlashOffIcon';
@@ -20,6 +22,7 @@ import {HeartIcon} from '../../assets/icons/HeartIcon';
 import {HomeFillIcon} from '../../assets/icons/HomeFillIcon';
 import {HomeIcon} from '../../assets/icons/HomeIcon';
 import {MessageIcon} from '../../assets/icons/MessageIcon';
+import {MessageRoundIcon} from '../../assets/icons/MessageRoundIcon';
 import {NewPostIcon} from '../../assets/icons/NewPostIcon';
 import {ProfileFillIcon} from '../../assets/icons/ProfileFillIcon';
 import {ProfileIcon} from '../../assets/icons/ProfileIcon';
@@ -32,11 +35,13 @@ import {ThemeColors} from '../../theme/theme';
 export interface IconBase {
   size?: number;
   color?: string;
+  fillColor?: string;
 }
 
-interface IconProps {
+export interface IconProps {
   name: keyof typeof iconRegistry;
   color?: ThemeColors;
+  fillColor?: ThemeColors;
   size?: number;
   onPress?: () => void;
 }
@@ -44,21 +49,28 @@ interface IconProps {
 export function Icon({
   name,
   color = 'backgroundContrast',
+  fillColor = 'background',
   size,
   onPress,
 }: IconProps) {
   const {colors} = useAppTheme();
   const SVGIcon = iconRegistry[name];
 
+  const iconProps: React.ComponentProps<typeof SVGIcon> = {
+    size,
+    color: colors[color],
+    fillColor: colors[fillColor],
+  };
+
   if (onPress) {
     return (
       <Pressable hitSlop={10} onPress={onPress}>
-        <SVGIcon color={colors[color]} size={size} />
+        <SVGIcon {...iconProps} />
       </Pressable>
     );
   }
 
-  return <SVGIcon color={colors[color]} size={size} />;
+  return <SVGIcon {...iconProps} />;
 }
 
 const iconRegistry = {
@@ -74,6 +86,8 @@ const iconRegistry = {
   check: CheckIcon,
   comment: CommentIcon,
   chevronRight: ChevronRightIcon,
+  checkRound: CheckRoundIcon,
+  errorRound: ErrorRoundIcon,
   eyeOn: EyeOnIcon,
   eyeOff: EyeOffIcon,
   flashOn: FlashOnIcon,
@@ -83,6 +97,7 @@ const iconRegistry = {
   home: HomeIcon,
   homeFill: HomeFillIcon,
   message: MessageIcon,
+  messageRound: MessageRoundIcon,
   newPost: NewPostIcon,
   profile: ProfileIcon,
   profileFill: ProfileFillIcon,
