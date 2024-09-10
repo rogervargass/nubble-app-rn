@@ -1,7 +1,7 @@
-import { createText } from '@shopify/restyle';
+import {createText} from '@shopify/restyle';
 import React from 'react';
-import { TextStyle } from 'react-native';
-import { Theme } from '../../theme/theme';
+import {TextStyle} from 'react-native';
+import {Theme} from '../../theme/theme';
 
 const SRText = createText<Theme>();
 type SRTextProps = React.ComponentProps<typeof SRText>;
@@ -20,11 +20,14 @@ export function Text({
   semiBold,
   preset = 'paragraphMedium',
   style,
-  ...sRTextProps
+  ...srTextProps
 }: TextProps) {
   const fontFamily = getFontFamily(preset, bold, italic, semiBold);
   return (
-    <SRText color="backgroundContrast" style={[$fontSizes[preset], {fontFamily}, style]} {...sRTextProps}>
+    <SRText
+      color="backgroundContrast"
+      style={[$fontSizes[preset], {fontFamily}, style]}
+      {...srTextProps}>
       {children}
     </SRText>
   );
@@ -40,7 +43,7 @@ type TextVariants =
   | 'paragraphCaption'
   | 'paragraphCaptionSmall';
 
-const $fontSizes: Record<TextVariants, TextStyle> = {
+export const $fontSizes: Record<TextVariants, TextStyle> = {
   headingLarge: {fontSize: 32, lineHeight: 38.4},
   headingMedium: {fontSize: 22, lineHeight: 26.4},
   headingSmall: {fontSize: 18, lineHeight: 23.4},
@@ -83,7 +86,7 @@ function getFontFamily(
   }
 }
 
-const $fontFamily = {
+export const $fontFamily = {
   black: 'Satoshi-Black',
   blackItalic: 'Satoshi-BlackItalic',
   bold: 'Satoshi-Bold',
