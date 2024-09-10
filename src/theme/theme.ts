@@ -1,6 +1,6 @@
-import { createTheme } from '@shopify/restyle';
+import {createTheme} from '@shopify/restyle';
 
-const palette = {
+export const palette = {
   greenPrimary: '#074C4E',
   greenPrimaryLight: '#EAF6F6',
   carrotSecondary: '#F86F2D',
@@ -26,26 +26,26 @@ export const theme = createTheme({
     ...palette,
     primary: palette.greenPrimary,
     primaryContrast: palette.grayWhite,
-  
+
     buttonPrimary: palette.greenPrimary,
-  
+
     background: palette.grayWhite,
     backgroundContrast: palette.grayBlack,
-  
+
     error: palette.redError,
     errorLight: palette.redErrorLight,
-  
+
     success: palette.greenSuccess,
     successLight: palette.greenSuccessLight,
-  
+
     market: palette.carrotSecondary,
     paragraph: palette.gray1,
-  
+
     paragraphSecondary: palette.gray1,
-  
+
     iconColor: palette.greenPrimary,
     iconFillColor: palette.grayWhite,
-  
+
     onBackgroundGray1: palette.gray1,
     onBackgroundGray2: palette.gray4,
   },
@@ -69,7 +69,7 @@ export const theme = createTheme({
     s16: 16,
   },
   textVariants: {
-    defaults: {}
+    defaults: {},
   },
 });
 
