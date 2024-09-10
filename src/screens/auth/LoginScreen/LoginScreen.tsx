@@ -1,11 +1,26 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {Button} from '../../../components/Button/Button';
 import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
 import {Screen} from '../../../components/Screen/Screen';
 import {Text} from '../../../components/Text/Text';
 import {TextInput} from '../../../components/TextInput/TextInput';
+import {RootStackParamList} from '../../../routes/Routes';
 
-export function LoginScreen() {
+type LoginScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'LoginScreen'
+>;
+
+export function LoginScreen({navigation}: LoginScreenProps) {
+  function navigateToSignUpScreen() {
+    navigation.navigate('SignUpScreen');
+  }
+
+  function navigateToForgotPasswordScreen() {
+    navigation.navigate('ForgotPasswordScreen');
+  }
+
   return (
     <Screen>
       <Text mb="s8" preset="headingLarge">
@@ -27,12 +42,21 @@ export function LoginScreen() {
         boxProps={{mb: 's10'}}
       />
 
-      <Text preset="paragraphSmall" color="primary" bold>
+      <Text
+        onPress={navigateToForgotPasswordScreen}
+        preset="paragraphSmall"
+        color="primary"
+        bold>
         Esqueceu sua senha?
       </Text>
 
       <Button title="Entrar" mt="s48" />
-      <Button title="Crie uma conta" preset="outline" mt="s12" />
+      <Button
+        onPress={navigateToSignUpScreen}
+        title="Crie uma conta"
+        preset="outline"
+        mt="s12"
+      />
     </Screen>
   );
 }
