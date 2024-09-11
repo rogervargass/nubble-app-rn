@@ -15,8 +15,9 @@ export function FormTextInput<FormType extends FieldValues>({
       rules={rules}
       render={({field, fieldState}) => (
         <TextInput
+          onChangeText={field.onChange}
+          value={field.value}
           erroMessage={fieldState.error?.message}
-          {...field}
           {...testInputProps}
         />
       )}
