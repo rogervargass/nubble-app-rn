@@ -1,5 +1,5 @@
-import { ThemeColors } from "../../theme/theme";
-import { TouchableOpacityBoxProps } from "../Box/Box";
+import { ThemeColors } from '../../theme/theme';
+import { TouchableOpacityBoxProps } from '../Box/Box';
 
 export type ButtonPreset = 'primary' | 'outline';
 
@@ -24,7 +24,7 @@ export const buttonPresets: Record<ButtonPreset, {
       backgroundColor: 'gray4',
     },
     content: 'gray2',
-   }
+   },
   },
   outline: {
     default: {
@@ -40,6 +40,6 @@ export const buttonPresets: Record<ButtonPreset, {
         borderColor: 'gray4',
       },
     content: 'gray2',
-    }
+    },
   },
 };
