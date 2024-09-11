@@ -1,3 +1,4 @@
+import {zodResolver} from '@hookform/resolvers/zod';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {useForm} from 'react-hook-form';
@@ -8,13 +9,7 @@ import {Screen} from '../../../components/Screen/Screen';
 import {Text} from '../../../components/Text/Text';
 import {useResetNavigationSuccess} from '../../../hooks/useResetNavigationSuccess';
 import {RootStackParamList} from '../../../routes/Routes';
-
-type SignUpFormType = {
-  username: string;
-  fullName: string;
-  email: string;
-  password: string;
-};
+import {signUpSchema, SignUpSchema} from './signUpSchema';
 
 type SignUpScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -23,7 +18,8 @@ type SignUpScreenProps = NativeStackScreenProps<
 
 export function SignUpScreen({navigation}: SignUpScreenProps) {
   const {reset} = useResetNavigationSuccess();
-  const {control, formState, handleSubmit} = useForm({
+  const {control, formState, handleSubmit} = useForm<SignUpSchema>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       username: '',
       fullName: '',
@@ -33,15 +29,16 @@ export function SignUpScreen({navigation}: SignUpScreenProps) {
     mode: 'onChange',
   });
 
-  function submitForm(formValues: SignUpFormType) {
-    reset({
-      title: 'Sua conta foi criada com sucesso!',
-      description: 'Agora é só fazer login na nossa plataforma',
-      icon: {
-        name: 'checkRound',
-        color: 'success',
-      },
-    });
+  function submitForm(formValues: SignUpSchema) {
+    console.log(formValues);
+    // reset({
+    //   title: 'Sua conta foi criada com sucesso!',
+    //   description: 'Agora é só fazer login na nossa plataforma',
+    //   icon: {
+    //     name: 'checkRound',
+    //     color: 'success',
+    //   },
+    // });
   }
 
   return (
@@ -53,7 +50,6 @@ export function SignUpScreen({navigation}: SignUpScreenProps) {
       <FormTextInput
         control={control}
         name="username"
-        rules={{required: 'username é obrigatório'}}
         label="Seu username"
         placeholder="@"
         boxProps={{mb: 's20'}}
@@ -62,7 +58,6 @@ export function SignUpScreen({navigation}: SignUpScreenProps) {
       <FormTextInput
         control={control}
         name="fullName"
-        rules={{required: 'fullName é obrigatório'}}
         label="Nome Completo"
         placeholder="Digite seu nome completo"
         boxProps={{mb: 's20'}}
@@ -72,7 +67,6 @@ export function SignUpScreen({navigation}: SignUpScreenProps) {
       <FormTextInput
         control={control}
         name="email"
-        rules={{required: 'E-mail é obrigatório'}}
         label="E-mail"
         placeholder="Digite seu e-mail"
         boxProps={{mb: 's20'}}
@@ -81,7 +75,6 @@ export function SignUpScreen({navigation}: SignUpScreenProps) {
       <FormPasswordInput
         control={control}
         name="password"
-        rules={{required: 'Senha é obrigatória'}}
         label="Senha"
         placeholder="Digite sua senha"
         boxProps={{mb: 's48'}}
