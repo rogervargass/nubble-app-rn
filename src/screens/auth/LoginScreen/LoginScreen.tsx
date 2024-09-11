@@ -13,8 +13,6 @@ import {
 } from '@components';
 import {RootStackParamList} from '@routes';
 
-
-
 import {loginSchema, LoginSchema} from './loginSchema';
 
 type LoginScreenProps = NativeStackScreenProps<
