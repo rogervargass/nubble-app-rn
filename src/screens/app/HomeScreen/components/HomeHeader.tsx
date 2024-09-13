@@ -10,7 +10,6 @@ export function HomeHeader() {
 
   return (
     <Box {...$wrapper} style={{paddingTop: top}}>
-      {/* <Box backgroundColor="carrotSecondary" height={16} width={70} /> */}
       <SimpleLogo width={70} />
       <Box flexDirection="row" gap="s24">
         <Icon name="search" />
