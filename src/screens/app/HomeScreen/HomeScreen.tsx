@@ -1,16 +1,37 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {FlatList, ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 
-import {Button, Screen, Text} from '@components';
+import {Post, postService} from '@domain';
+
+import {PostItem, Screen} from '@components';
 import {AppTabScreenProps} from '@routes';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
+  const [postList, setPostList] = useState<Post[]>([]);
+
+  useEffect(() => {
+    postService.getList().then(list => setPostList(list));
+  }, []);
+
+  function renderPost({item}: ListRenderItemInfo<Post>) {
+    return <PostItem post={item} />;
+  }
+
   return (
-    <Screen>
-      <Text preset="headingLarge">Home</Text>
-      <Button
-        onPress={() => navigation.navigate('SettingScreen')}
-        title="settings"
+    <Screen style={$screen}>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={postList}
+        keyExtractor={post => post.id}
+        renderItem={renderPost}
       />
     </Screen>
   );
 }
+
+const $screen: StyleProp<ViewStyle> = {
+  paddingTop: 0,
+  paddingBottom: 0,
+  paddingHorizontal: 0,
+};
