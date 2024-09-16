@@ -8,14 +8,20 @@ export function usePostList() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean | null>(null);
   const [page, setPage] = useState<number>(1);
+  const [hasNextPage, setHasNextPage] = useState<boolean>(true);
 
-  async function fetchData() {
+  async function fetchInitialData() {
     try {
       setError(null);
       setLoading(true);
-      const list = await postService.getList(page);
-      setPostList(prev => [...prev, ...list]);
-      setPage(prev => prev + 1);
+      const {data, meta} = await postService.getList(1);
+      setPostList(data);
+      if (meta.hasNextPage) {
+        setPage(2);
+        setHasNextPage(true);
+      } else {
+        setHasNextPage(false);
+      }
     } catch (er) {
       setError(true);
     } finally {
@@ -23,22 +29,37 @@ export function usePostList() {
     }
   }
 
-  function fetchNextPage() {
-    if (!loading) {
-      fetchData();
+  async function fetchNextPage() {
+    if (loading || !hasNextPage) {
+      return;
+    }
+
+    try {
+      setError(null);
+      setLoading(true);
+      const {data, meta} = await postService.getList(page);
+      setPostList(prev => [...prev, ...data]);
+      if (meta.hasNextPage) {
+        setPage(prev => prev + 1);
+      } else {
+        setHasNextPage(false);
+      }
+    } catch (er) {
+      setError(true);
+    } finally {
+      setLoading(false);
     }
   }
 
   useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchInitialData();
   }, []);
 
   return {
     postList,
     loading,
     error,
-    refetch: fetchData,
+    refresh: fetchInitialData,
     fetchNextPage,
   };
 }
