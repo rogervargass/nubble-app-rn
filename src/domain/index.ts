@@ -1,5 +1,4 @@
-export * from './Post/postService';
-export * from './Post/postType';
-export * from './Post/useCases/usePostList';
+export * from './Post';
+export * from './PostComment';
 
 export * from './hooks/usePaginatedList';

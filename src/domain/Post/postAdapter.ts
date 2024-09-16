@@ -2,7 +2,7 @@ import {Post, PostAPI} from './postType';
 
 function toPost(postApi: PostAPI): Post {
   return {
-    id: postApi.id.toString(),
+    id: postApi.id,
     text: postApi.text,
     author: {
       profileURL: postApi.user.profile_url,
