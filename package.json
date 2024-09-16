@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "art:3333": "adb reverse tcp:3333 tcp:3333"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
