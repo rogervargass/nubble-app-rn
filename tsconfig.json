@@ -13,7 +13,10 @@
       "@api": ["src/api"],
       "@types": ["src/types"],
       "@utils": ["src/utils"],
-      "@infra": ["src/infra"]
+      "@infra": ["src/infra"],
+      "@services": ["src/services"],
+      "@test": ["./src/test"],
+      "@assets": ["./src/assets"]
     }
   }
 }
