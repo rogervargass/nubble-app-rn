@@ -1,51 +1,55 @@
-import React, {useEffect} from 'react';
-import {Dimensions} from 'react-native';
+import React, {useCallback, useEffect, useRef} from 'react';
+import {Animated} from 'react-native';
 
-import {useToast} from '@services';
+import {useToast, useToastService} from '@services';
 
-import {$shadowProps} from '@theme';
+import {ToastContent} from './components/ToastContent';
 
-import {Box, BoxProps} from '../Box/Box';
-import {Icon} from '../Icon/Icon';
-import {Text} from '../Text/Text';
-
-const MAX_WIDTH = Dimensions.get('screen').width * 0.95;
+const DEFAULT_DURATION = 2000;
 
 export function Toast() {
-  const {toast, hiddenToast} = useToast();
+  const toast = useToast();
+  const {hideToast} = useToastService();
+
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const runEnteringAnimation = useCallback(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
+  const runExitingAnimation = useCallback(
+    (callback: Animated.EndCallback) => {
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start(callback);
+    },
+    [fadeAnim],
+  );
 
   useEffect(() => {
     if (toast) {
+      runEnteringAnimation();
+
       setTimeout(() => {
-        hiddenToast();
-      }, 2000);
+        runExitingAnimation(hideToast);
+      }, toast.duration || DEFAULT_DURATION);
     }
-  }, [toast, hiddenToast]);
+  }, [toast, hideToast, runEnteringAnimation, runExitingAnimation]);
 
   if (!toast) {
     return null;
   }
 
   return (
-    <Box bottom={50} {...$boxStyle}>
-      <Icon color="success" name="checkRound" />
-      <Text style={{flexShrink: 1}} preset="paragraphMedium" bold>
-        {toast.message}
-      </Text>
-    </Box>
+    <Animated.View
+      style={{position: 'absolute', alignSelf: 'center', opacity: fadeAnim}}>
+      <ToastContent toast={toast} />
+    </Animated.View>
   );
 }
-
-const $boxStyle: BoxProps = {
-  position: 'absolute',
-  padding: 's16',
-  alignSelf: 'center',
-  flexDirection: 'row',
-  gap: 's16',
-  alignItems: 'center',
-  borderRadius: 's16',
-  backgroundColor: 'background',
-  opacity: 0.95,
-  maxWidth: MAX_WIDTH,
-  style: {...$shadowProps},
-};
