@@ -10,11 +10,14 @@ import {Theme, ThemeColors} from '@theme';
 
 interface ActivityIndicatorProps
   extends Omit<RNActivityIndicatorProps, 'color'> {
-  color: ThemeColors;
+  color?: ThemeColors;
 }
 
-export function ActivityIndicator({color}: ActivityIndicatorProps) {
+export function ActivityIndicator({
+  color = 'primary',
+  ...rest
+}: ActivityIndicatorProps) {
   const {colors} = useTheme<Theme>();
 
-  return <RNActivityIndicator color={colors[color]} />;
+  return <RNActivityIndicator color={colors[color]} {...rest} />;
 }
