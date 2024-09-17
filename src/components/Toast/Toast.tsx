@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef} from 'react';
 import {Animated} from 'react-native';
 
-import {useToast, useToastService} from '@services';
+import {ToastPosition, useToast, useToastService} from '@services';
 
 import {ToastContent} from './components/ToastContent';
 
@@ -10,6 +10,7 @@ const DEFAULT_DURATION = 2000;
 export function Toast() {
   const toast = useToast();
   const {hideToast} = useToastService();
+  const position: ToastPosition = toast?.position || 'top';
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -48,7 +49,12 @@ export function Toast() {
 
   return (
     <Animated.View
-      style={{position: 'absolute', alignSelf: 'center', opacity: fadeAnim}}>
+      style={{
+        position: 'absolute',
+        alignSelf: 'center',
+        opacity: fadeAnim,
+        [position]: 100,
+      }}>
       <ToastContent toast={toast} />
     </Animated.View>
   );
