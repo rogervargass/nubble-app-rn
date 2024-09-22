@@ -17,7 +17,7 @@ export function FormPasswordInput<FormType extends FieldValues>({
       rules={rules}
       render={({field, fieldState}) => (
         <PasswordInput
-          erroMessage={fieldState.error?.message}
+          errorMessage={fieldState.error?.message}
           onChangeText={field.onChange}
           value={field.value}
           {...passwordInputProps}

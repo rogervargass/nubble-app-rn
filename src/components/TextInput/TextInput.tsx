@@ -12,14 +12,14 @@ import {$fontFamily, $fontSizes, Text} from '../Text/Text';
 
 export interface TextInputProps extends RNTextInputProps {
   label: string;
-  erroMessage?: string;
+  errorMessage?: string;
   RightComponent?: React.ReactElement;
   boxProps?: BoxProps;
 }
 
 export function TextInput({
   label,
-  erroMessage,
+  errorMessage,
   RightComponent,
   boxProps,
   ...rnTextInputProps
@@ -29,9 +29,9 @@ export function TextInput({
 
   const $textInputContainer: BoxProps = {
     flexDirection: 'row',
-    borderWidth: erroMessage ? 2 : 1,
+    borderWidth: errorMessage ? 2 : 1,
     padding: 's16',
-    borderColor: erroMessage ? 'error' : 'gray4',
+    borderColor: errorMessage ? 'error' : 'gray4',
     borderRadius: 's12',
   };
 
@@ -57,9 +57,9 @@ export function TextInput({
             <Box justifyContent="center">{RightComponent}</Box>
           )}
         </Box>
-        {erroMessage && (
+        {errorMessage && (
           <Text preset="paragraphSmall" color="error" bold>
-            {erroMessage}
+            {errorMessage}
           </Text>
         )}
       </Pressable>

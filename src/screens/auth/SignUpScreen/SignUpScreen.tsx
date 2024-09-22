@@ -5,6 +5,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useForm} from 'react-hook-form';
 
 import {
+  ActivityIndicator,
   Button,
   FormPasswordInput,
   FormTextInput,
@@ -15,6 +16,7 @@ import {useResetNavigationSuccess} from '@hooks';
 import {AuthScreenProps, AuthStackParamList} from '@routes';
 
 import {signUpSchema, SignUpSchema} from './signUpSchema';
+import {useAsyncValidation} from './useAsyncValidation';
 
 const resetParam: AuthStackParamList['SuccessScreen'] = {
   title: 'Sua conta foi criada com sucesso!',
@@ -41,10 +43,17 @@ export function SignUpScreen({navigation}: AuthScreenProps<'SignUpScreen'>) {
       reset(resetParam);
     },
   });
-  const {control, formState, handleSubmit} = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
-    defaultValues,
-    mode: 'onChange',
+
+  const {control, formState, handleSubmit, watch, getFieldState} =
+    useForm<SignUpSchema>({
+      resolver: zodResolver(signUpSchema),
+      defaultValues,
+      mode: 'onChange',
+    });
+
+  const {usernameValidation, emailValidation} = useAsyncValidation({
+    watch,
+    getFieldState,
   });
 
   function submitForm(formValues: SignUpSchema) {
@@ -62,7 +71,13 @@ export function SignUpScreen({navigation}: AuthScreenProps<'SignUpScreen'>) {
         name="username"
         label="Seu username"
         placeholder="@"
+        errorMessage={usernameValidation.errorMessage}
         boxProps={{mb: 's20'}}
+        RightComponent={
+          usernameValidation.isFetching ? (
+            <ActivityIndicator size="small" />
+          ) : undefined
+        }
       />
 
       <FormTextInput
@@ -88,7 +103,13 @@ export function SignUpScreen({navigation}: AuthScreenProps<'SignUpScreen'>) {
         name="email"
         label="E-mail"
         placeholder="Digite seu e-mail"
+        errorMessage={emailValidation.errorMessage}
         boxProps={{mb: 's20'}}
+        RightComponent={
+          emailValidation.isFetching ? (
+            <ActivityIndicator size="small" />
+          ) : undefined
+        }
       />
 
       <FormPasswordInput
@@ -100,7 +121,11 @@ export function SignUpScreen({navigation}: AuthScreenProps<'SignUpScreen'>) {
       />
 
       <Button
-        disabled={!formState.isValid}
+        disabled={
+          !formState.isValid ||
+          usernameValidation.notReady ||
+          emailValidation.notReady
+        }
         onPress={handleSubmit(submitForm)}
         title="Criar uma conta"
         loading={isLoading}
