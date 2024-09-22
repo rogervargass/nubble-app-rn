@@ -18,7 +18,7 @@ import {AuthScreenProps, AuthStackParamList} from '@routes';
 import {signUpSchema, SignUpSchema} from './signUpSchema';
 import {useAsyncValidation} from './useAsyncValidation';
 
-const resetParam: AuthStackParamList['SuccessScreen'] = {
+const resetParams: AuthStackParamList['SuccessScreen'] = {
   title: 'Sua conta foi criada com sucesso!',
   description: 'Agora é só fazer login na nossa plataforma',
   icon: {
@@ -40,7 +40,7 @@ export function SignUpScreen({navigation}: AuthScreenProps<'SignUpScreen'>) {
   const {reset} = useResetNavigationSuccess();
   const {signUp, isLoading} = useAuthSignUp({
     onSuccess: () => {
-      reset(resetParam);
+      reset(resetParams);
     },
   });
 
