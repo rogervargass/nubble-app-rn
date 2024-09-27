@@ -18,7 +18,7 @@ import {loginSchema, LoginSchema} from './loginSchema';
 
 export function LoginScreen({navigation}: AuthScreenProps<'LoginScreen'>) {
   const {showToast} = useToastService();
-  const {isLoading, singIn} = useAuthSignIn({
+  const {isLoading, signIn} = useAuthSignIn({
     onError: message => showToast({message, type: 'error'}),
   });
 
@@ -40,7 +40,7 @@ export function LoginScreen({navigation}: AuthScreenProps<'LoginScreen'>) {
   }
 
   function submitForm(credentials: LoginSchema) {
-    singIn(credentials);
+    signIn(credentials);
   }
 
   return (
