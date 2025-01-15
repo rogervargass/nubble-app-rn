@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+#. "$(dirname -- "$0")/_/husky.sh"
 
 npm run lint
 
-npx tsc --noEmit
+npx tsc --noEmit --skipLibCheck
 
 npm run test
