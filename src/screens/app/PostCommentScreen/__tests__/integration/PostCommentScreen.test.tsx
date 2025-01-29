@@ -1,11 +1,18 @@
 import React from 'react';
 
-import { renderScreen } from 'test-utils';
+import { server } from '@test';
+import { renderScreen, screen } from 'test-utils';
 
 import { PostCommentScreen } from '../../PostCommentScreen';
 
+beforeAll(() => server.listen());
+
+afterEach(() => server.resetHandlers());
+
+afterAll(() => server.close());
+
 describe('integration: PostCommentScreen', () => {
-  test('when ADDING a comment the list is automatically updated', () => {
+  test('when ADDING a comment the list is automatically updated', async () => {
     renderScreen(<PostCommentScreen navigation={{} as any} route={{
       name: 'PostCommentScreen',
       key: 'PostCommentScreen',
@@ -14,5 +21,9 @@ describe('integration: PostCommentScreen', () => {
         postAuthorId: 1,
       },
     }} />);
+
+    const comment = await screen.findByText(/meu comentário/i);
+
+    expect(comment).toBeTruthy();
   });
 });
