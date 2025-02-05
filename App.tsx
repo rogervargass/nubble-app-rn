@@ -4,7 +4,6 @@ import {
   AuthCredentialsProvider,
   initializeStorage,
   MMKVStorage,
-  ToastProvider,
 } from '@services';
 import {ThemeProvider} from '@shopify/restyle';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
@@ -25,10 +24,12 @@ function App(): React.JSX.Element {
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider>
           <ThemeProvider theme={theme}>
-            <ToastProvider>
-              <Router />
-              <Toast />
-            </ToastProvider>
+            {/* Only use ToastProvider if it is using Context implementation.
+          Zustand implementation doesn't need a provider */}
+            {/* <ToastProvider> */}
+            <Router />
+            <Toast />
+            {/* </ToastProvider> */}
           </ThemeProvider>
         </SafeAreaProvider>
       </QueryClientProvider>
