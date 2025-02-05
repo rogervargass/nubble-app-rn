@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList, ListRenderItemInfo} from 'react-native';
 
 import {PostComment, usePostCommentList} from '@domain';
-import { useAuthCredentials } from '@services';
+import {useAuthCredentials} from '@services';
 
 import {Box, Screen} from '@components';
 import {useAppSafeArea} from '@hooks';
