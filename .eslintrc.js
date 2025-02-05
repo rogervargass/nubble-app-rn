@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   extends: [
-    '@react-native',
+    '@react-native-community',
     'plugin:@tanstack/eslint-plugin-query/recommended',
   ],
   plugins: ['import', '@tanstack/query'],
@@ -39,11 +39,13 @@ module.exports = {
           },
         ],
         'react-native/no-inline-styles': 'off',
+        'prettier/prettier': [
+          'error',
+          {
+            endOfLine: 'auto',
+          },
+        ],
       },
-    },
-    {
-      files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
-      extends: ['plugin:testing-library/react'],
     },
   ],
 };
