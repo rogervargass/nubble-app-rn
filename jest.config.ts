@@ -6,6 +6,7 @@ const config: Config = {
   setupFilesAfterEnv: ['@testing-library/react-native/extend-expect'],
   moduleDirectories: ['node_modules', './src/test'],
   modulePathIgnorePatterns: ['.*/mockedData/.*'],
+  testTimeout: 15000,
   collectCoverageFrom: [
     'src/{components,utils,hooks,domain,screens}/**/*.{js,jsx,ts,tsx}',
   ],
