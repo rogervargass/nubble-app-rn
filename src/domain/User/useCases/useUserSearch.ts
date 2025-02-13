@@ -7,7 +7,7 @@ export function useUserSearch(search: string) {
     [QueryKeys.UserList, search],
     () => userService.searchUser(search),
     {
-      enabled: search.length > 2,
+      enabled: search.length > 0,
       staleTime: 30000,
     },
   );
