@@ -3,3 +3,5 @@ export * from './storage';
 export * from './toast/toastTypes';
 export * from './toast/useToast';
 export * from './searchHistory';
+export * from './cameraRoll';
+export * from './permission';

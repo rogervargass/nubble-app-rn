@@ -61,5 +61,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>For publishing new posts</string>
 </dict>
 </plist>

@@ -1,0 +1,47 @@
+import {Permission, PermissionsAndroid, Platform} from 'react-native';
+
+import {
+  PermissionName,
+  PermissionService,
+  PermissionStatus,
+} from './permissionTypes';
+
+async function check(name: PermissionName): Promise<PermissionStatus> {
+  const permission = mapNameToPermission(name);
+
+  if (permission) {
+    const isPermissionGranted = await PermissionsAndroid.check(permission);
+    return isPermissionGranted ? 'granted' : 'denied';
+  }
+
+  return 'unavailable';
+}
+
+async function request(name: PermissionName): Promise<PermissionStatus> {
+  const permission = mapNameToPermission(name);
+
+  if (permission) {
+    const status = await PermissionsAndroid.request(permission);
+    return status;
+  }
+
+  return 'unavailable';
+}
+
+function mapNameToPermission(name: PermissionName): Permission | null {
+  switch (name) {
+    case 'photoLibrary':
+      if (typeof Platform.Version === 'number' && Platform.Version >= 33) {
+        return 'android.permission.READ_MEDIA_IMAGES';
+      } else {
+        return 'android.permission.READ_EXTERNAL_STORAGE';
+      }
+    case 'camera':
+      return 'android.permission.CAMERA';
+
+    default:
+      return null;
+  }
+}
+
+export const permissionService: PermissionService = {request, check};
